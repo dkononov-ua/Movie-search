@@ -2,7 +2,10 @@ import {
 	addMovieToList,
 	createMarkup,
 	createStyle,
-	moviesList
+	moviesList,
+	inputSearch,
+	triggerMode,
+	clearMoviesMarkup
 } from './dom.js';
 
 const getData = (url) => {
@@ -11,13 +14,41 @@ const getData = (url) => {
 	.then((data) => data.Search);
 }
 
-const search = 'iron man';
+let searchLLast = null;
 
-getData(`http://www.omdbapi.com/?i=tt3896198&apikey=4d447f57&s=${search}`)
-.then(movies => movies.forEach(movie => addMovieToList(movie)))
-.catch(console.log);
+const debounce = (() => {
+let timer = null;
+
+return (cb, ms) => {
+	if (timer) {
+clearTimeout(timer)
+timer = null;
+	}
+
+	timer = setTimeout(cb,ms);
+}
+})()
+
+const inputSearchHandler = (e) => {
+	debounce(() => {
+		const searchString = e.target.value.trim();
+
+		if (searchString && searchString.length > 3 && searchLLast !== searchString) {
+
+			if (!triggerMode) clearMoviesMarkup(moviesList)
+
+			getData(`http://www.omdbapi.com/?i=tt3896198&apikey=4d447f57&s=${searchString}`)
+			.then(movies => movies.forEach(movie => addMovieToList(movie)))
+			.catch(console.log);
+		}
+
+	searchLLast = searchString
+
+	},2000)
+}
 
 export const appInit = () => {
 	createStyle();
 	createMarkup();
+	inputSearch.addEventListener('keyup', inputSearchHandler)
 }
