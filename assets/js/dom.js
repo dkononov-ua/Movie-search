@@ -12,23 +12,23 @@ const createElement = ({
 }) => {
 	const el = document.createElement(type);
 
-Object.keys(attr).forEach((key) => {
-	if (key !== 'innerHTML') el.setAttribute(key, attr[key]);
-	else el.innerHTML = attr[key];
-})
+	Object.keys(attr).forEach((key) => {
+		if (key !== 'innerHTML') el.setAttribute(key, attr[key]);
+		else el.innerHTML = attr[key];
+	})
 
 	if (container && position === 'append') container.append(el);
 	if (container && position === 'prepend') container.prepend(el);
-	if (evt && handler && typeof handler === 'function')	el.addEventListener(evt, handler);
+	if (evt && handler && typeof handler === 'function') el.addEventListener(evt, handler);
 
 	return el;
 }
 
 export const createStyle = () => {
-createElement({
-	type:'style',
-	attr: {
-		innerHTML: `
+	createElement({
+		type: 'style',
+		attr: {
+			innerHTML: `
 		* {
 			box-sizing: border-box;
 		}
@@ -84,40 +84,40 @@ createElement({
 		transform: translate(7px, -2px);
 		}
 		`
-	},
-	container: document.head
-});
+		},
+		container: document.head
+	});
 };
 
 export const createMarkup = () => {
 	const container = createElement({
 		type: 'div',
-		attr: {class: 'container'},
+		attr: { class: 'container' },
 		container: document.body,
 		position: 'prepend'
 	});
 
 	createElement({
 		type: 'h1',
-		attr: {innerHTML: 'Додаток для пошуку фільмів'},
+		attr: { innerHTML: 'Додаток для пошуку фільмів' },
 		container
 	})
 
-	const searchBox = createElement ({
+	const searchBox = createElement({
 		type: 'div',
-		attr: {class: 'search'},
+		attr: { class: 'search' },
 		container
 	});
 
-	const inputBox = createElement ({
+	const inputBox = createElement({
 		type: 'div',
-		attr: {class: 'search__group search__group--input'},
+		attr: { class: 'search__group search__group--input' },
 		container: searchBox
 	});
 
-	const checkbox = createElement ({
+	const checkbox = createElement({
 		type: 'div',
-		attr: {class: 'search__group search__group--checkbox'},
+		attr: { class: 'search__group search__group--checkbox' },
 		container: searchBox
 	});
 
@@ -125,7 +125,7 @@ export const createMarkup = () => {
 		type: 'label',
 		attr: {
 			class: "search__label-input",
-			for:"search",
+			for: "search",
 			innerHTML: 'Пошук фільмів',
 		},
 		container: inputBox
@@ -135,7 +135,7 @@ export const createMarkup = () => {
 		type: 'input',
 		attr: {
 			class: "search__input",
-			id:"search",
+			id: "search",
 			type: 'search',
 			placeholder: 'Введіть що хочете дивитись...',
 		},
@@ -146,7 +146,7 @@ export const createMarkup = () => {
 		type: 'input',
 		attr: {
 			class: "search__checkbox",
-			id:"checkbox",
+			id: "checkbox",
 			type: 'checkbox'
 		},
 		container: checkbox,
@@ -158,15 +158,15 @@ export const createMarkup = () => {
 		type: 'label',
 		attr: {
 			class: "search__lable-checkbox",
-			for:"checkbox",
+			for: "checkbox",
 			innerHTML: 'Додавати фільми до інснуючих списків',
 		},
 		container: checkbox
 	});
 
 	const movies = createElement({
-		type:'div',
-		attr: {class: 'movies'},
+		type: 'div',
+		attr: { class: 'movies' },
 		container
 	});
 
@@ -176,12 +176,12 @@ export const createMarkup = () => {
 export const addMovieToList = (movie) => {
 	const item = createElement({
 		type: 'div',
-		attr: {class: 'movie'},
+		attr: { class: 'movie' },
 		container: moviesList
 	});
 
 	createElement({
-		type:'img', 
+		type: 'img',
 		attr: {
 			class: 'movie__image',
 			src: /(http|https):\/\//i.test(movie.Poster) ? movie.Poster : 'assets/img/no-image.png',

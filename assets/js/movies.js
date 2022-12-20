@@ -10,24 +10,24 @@ import {
 
 const getData = (url) => {
 	return fetch(url)
-	.then((res) => res.json())
-	.then((data) => data.Search);
+		.then((res) => res.json())
+		.then((data) => data.Search);
 }
 
 let searchLLast = null;
 
 const debounce = (() => {
-let timer = null;
+	let timer = null;
 
-return (cb, ms) => {
-	if (timer) {
-clearTimeout(timer)
-timer = null;
+	return (cb, ms) => {
+		if (timer) {
+			clearTimeout(timer)
+			timer = null;
+		}
+
+		timer = setTimeout(cb, ms);
 	}
-
-	timer = setTimeout(cb,ms);
-}
-})()
+})();
 
 const inputSearchHandler = (e) => {
 	debounce(() => {
@@ -38,13 +38,13 @@ const inputSearchHandler = (e) => {
 			if (!triggerMode) clearMoviesMarkup(moviesList)
 
 			getData(`http://www.omdbapi.com/?i=tt3896198&apikey=4d447f57&s=${searchString}`)
-			.then(movies => movies.forEach(movie => addMovieToList(movie)))
-			.catch(console.log);
+				.then(movies => movies.forEach(movie => addMovieToList(movie)))
+				.catch(console.log);
 		}
 
-	searchLLast = searchString
+		searchLLast = searchString
 
-	},2000)
+	}, 2000)
 }
 
 export const appInit = () => {
