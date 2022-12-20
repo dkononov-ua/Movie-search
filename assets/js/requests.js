@@ -24,7 +24,7 @@
 
 const getData = (url) => {
 	return fetch(url)
-	.then((Response) => Response.json())
+	.then((res) => res.json())
 	.then((data) => data.Search);
 }
 
